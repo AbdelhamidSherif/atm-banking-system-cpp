@@ -1,15 +1,15 @@
 # ATM Banking System
 
-A C++ console application simulating an ATM (Automated Teller Machine) interface with essential banking operations including quick withdraw, normal withdraw, deposit, and balance checking functionalities.
+A modular C++ console application simulating an ATM (Automated Teller Machine) interface with essential banking operations including quick withdraw, normal withdraw, deposit, and balance checking functionalities.
 
 ## Overview
 
-This ATM Banking System represents a client-side banking application built using **Functional Programming** principles. Unlike the previous administrative banking systems, this project focuses on the customer experience, providing a simplified ATM-like interface for individual account operations.
+This ATM Banking System represents a client-side banking application built using **Functional Programming** principles with a clean modular architecture. Unlike administrative banking systems, this project focuses on the customer experience, providing a simplified ATM-like interface for individual account operations.
 
 ### Programming Paradigm
 
-This version continues the **Functional Programming** approach with a focus on user experience:
-- **Function-based architecture** for ATM operations
+This version uses **Functional Programming** approach with modular design:
+- **Function-based architecture** organized across 7 specialized modules
 - **Session-based client context** maintaining current user state  
 - **Transaction-focused design** optimized for customer interactions
 - **Input validation functions** ensuring secure operations
@@ -23,6 +23,40 @@ An **Object-Oriented Programming (OOP)** version is planned featuring:
 - **Strategy pattern** for different withdrawal methods
 - **Observer pattern** for transaction monitoring
 - **Enhanced security through encapsulation**
+
+## Project Architecture
+
+### Modular File Structure
+```
+ATM-System/
+├── headers/            → Header files (.h)
+│   ├── Client.h        → Data structures and enums
+│   ├── Utils.h         → Utility functions
+│   ├── FileManager.h   → File I/O operations
+│   ├── Authentication.h  → Login and validation
+│   ├── ATMOperations.h  → Transaction processing
+│   └── UserInterface.h  → Menu systems
+├── src/                → Source files (.cpp)
+│   ├── Globals.cpp     → Global variables
+│   ├── Utils.cpp       → Utility implementations
+│   ├── FileManager.cpp  → File operations
+│   ├── Authentication.cpp  → Login logic
+│   ├── ATMOperations.cpp  → Transaction logic
+│   └── UserInterface.cpp  → UI implementations
+├── data/
+│   └── Clients.txt     → Client account database
+├── main.cpp            → Application entry point
+└── build.bat           → Build automation script
+```
+
+### Module Breakdown
+
+**Authentication Module**: Handles secure client login with account number and PIN validation
+**File Manager Module**: Manages persistent data storage and retrieval operations
+**ATM Operations Module**: Processes all banking transactions (withdraw, deposit, balance)
+**User Interface Module**: Manages console-based menus and user interactions
+**Utils Module**: Provides shared utility functions for string processing
+**Client Module**: Defines core data structures and system enumerations
 
 ## What's New in This Version
 
@@ -76,6 +110,13 @@ This ATM system represents a completely different perspective on banking softwar
 
 ## Technical Architecture
 
+### Modular Design Benefits
+- **Maintainable Code**: Each module handles specific functionality
+- **Reusable Components**: Modules can be used in other projects
+- **Team Collaboration**: Multiple developers can work on different modules
+- **Easy Testing**: Individual modules can be tested separately
+- **Clear Separation**: Business logic separated from UI and data layers
+
 ### Data Structure
 ```cpp
 struct sClient {
@@ -88,24 +129,27 @@ struct sClient {
 };
 ```
 
-### Core Functions
+### Core Module Functions
 
-#### Authentication Functions
+#### Authentication Module (`Authentication.cpp`)
 - `LoadClientInfo()` - Validates account number and PIN combination
 - `FinedClientByAccountNumberAndPinCode()` - Searches client database
 - `Login()` - Handles authentication flow with retry mechanism
 
-#### Transaction Processing
-- `DepositBalanceToClientByAccountNumber()` - Processes all balance changes
+#### File Manager Module (`FileManager.cpp`)
+- `LoadClientsDataFromFile()` - Reads client data from storage
 - `SaveCleintsDataToFile()` - Persists transaction data to file
+- `ConvertLineToRecord()` - Parses file data to client structure
 - `ConvertRecordToLine()` - Serializes client data for storage
 
-#### ATM-Specific Operations
+#### ATM Operations Module (`ATMOperations.cpp`)
 - `GetQuickWithDrawAmount()` - Maps quick withdraw options to amounts
+- `DepositBalanceToClientByAccountNumber()` - Processes all balance changes
 - `ReadWithDrawAmont()` - Validates custom withdrawal amounts (multiples of 5)
 - `ReadDepositAmount()` - Validates positive deposit amounts
 
-#### User Interface
+#### User Interface Module (`UserInterface.cpp`)
+- `ShowMainMenue()` - Main ATM menu interface
 - `ShowQuickWithdrawScreen()` - Interactive quick withdrawal interface
 - `ShowNormalWithDrawScreen()` - Custom withdrawal interface  
 - `ShowDepositScreen()` - Deposit operation interface
@@ -151,8 +195,23 @@ struct sClient {
     Login Screen
 ---------------------------------
 Enter Account Number? A001
-Enter Pin? 1234
+Enter Pin? 1001
 ```
+
+### Sample Test Accounts
+The system comes with pre-loaded test accounts in `data/Clients.txt`:
+
+**Small Balance Accounts** (for testing overdraft protection):
+- Account: `A007` | PIN: `1007` | Balance: $125.00
+- Account: `A010` | PIN: `1010` | Balance: $580.00
+
+**Medium Balance Accounts** (for normal testing):
+- Account: `A001` | PIN: `1001` | Balance: $1,500.00
+- Account: `A004` | PIN: `1004` | Balance: $950.00
+
+**High Balance Accounts** (for large transactions):
+- Account: `A002` | PIN: `1002` | Balance: $2,500.00
+- Account: `A008` | PIN: `1008` | Balance: $3,200.00
 
 ### ATM Main Menu
 ```
@@ -207,12 +266,26 @@ Done Successfully. New balance is: 5225
 ## File Structure
 
 ```
-atm-banking-system-cpp/
-│
-├── main.cpp           # Complete ATM application source
-├── Clients.txt        # Client account database
-├── README.md          # This documentation
-└── .gitignore         # Git ignore file
+ATM-System/
+├── headers/
+│   ├── Client.h           # Data structures and enumerations
+│   ├── Utils.h            # Utility function declarations
+│   ├── FileManager.h      # File I/O operation declarations
+│   ├── Authentication.h   # Login system declarations
+│   ├── ATMOperations.h    # Transaction processing declarations
+│   └── UserInterface.h    # Menu system declarations
+├── src/
+│   ├── Globals.cpp        # Global variable definitions
+│   ├── Utils.cpp          # String processing utilities
+│   ├── FileManager.cpp    # File operations implementation
+│   ├── Authentication.cpp # Login and validation logic
+│   ├── ATMOperations.cpp  # Transaction processing logic
+│   └── UserInterface.cpp  # Menu and UI implementations
+├── data/
+│   └── Clients.txt        # Client account database
+├── main.cpp               # Application entry point
+├── build.bat              # Automated build script
+└── README.md              # This documentation
 ```
 
 ## Security Features
@@ -235,10 +308,13 @@ atm-banking-system-cpp/
 
 ## Code Statistics
 
-- **Total Lines**: ~380 lines
+- **Total Files**: 13 files organized in 4 directories
+- **Header Files**: 6 modular interface definitions
+- **Source Files**: 6 implementation modules + main.cpp
+- **Total Lines**: ~400 lines across all modules
 - **Functions**: 25+ specialized ATM functions
-- **Focus**: Customer-facing operations only
-- **Complexity**: Simplified interface for ease of use
+- **Focus**: Customer-facing operations with modular architecture
+- **Complexity**: Simplified interface with clean separation of concerns
 
 ## Future Enhancements
 
