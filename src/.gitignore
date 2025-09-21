@@ -1,0 +1,54 @@
+# =========================
+# Visual Studio Code
+# =========================
+.vscode/              
+*.code-workspace      
+
+# =========================
+# Compiled source files
+# =========================
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.obj
+*.so
+*.dylib
+*.out
+
+# =========================
+# Debug / Release folders
+# =========================
+/bin/
+/build/
+/debug/
+/release/
+
+# =========================
+# Logs / temp files
+# =========================
+*.log
+*.tmp
+*.swp
+*.swo
+*.bak
+
+# =========================
+# OS generated files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# CMake / Make
+# =========================
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# =========================
+# Project-specific
+# =========================
